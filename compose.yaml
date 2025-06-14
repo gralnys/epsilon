@@ -1,0 +1,45 @@
+services:
+  caddy:
+    build: caddy
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - 80:80
+      - 443:443
+      - 443:443/udp
+    volumes:
+      - caddy_data:/data
+  
+  db:
+    image: postgres:17.5-alpine3.22
+    restart: unless-stopped
+    shm_size: 128mb
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    env_file: postgres.env
+  
+  pgadmin:
+    build: pgadmin
+    restart: unless-stopped
+    environment:
+      - PGADMIN_REPLACE_SERVERS_ON_STARTUP=True
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    env_file: pgadmin.env
+
+  grav:
+    image: linuxserver/grav:1.7.48
+    restart: unless-stopped
+    environment:
+      - TZ=America/Chicago
+    volumes:
+      - grav_config:/config
+
+volumes:
+  caddy_data:
+  db_data:
+  pgadmin:
+  grav_config:
