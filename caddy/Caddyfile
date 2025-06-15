@@ -1,4 +1,4 @@
-http://epsilonlessthan0.org {
+:80 {
 	handle /pgadmin* {
 		reverse_proxy pgadmin:80
 	}
