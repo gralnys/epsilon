@@ -1,4 +1,4 @@
-localhost {
+localhost, epsilonlessthan0.org {
 	handle /pgadmin* {
 		reverse_proxy pgadmin:80
 	}
