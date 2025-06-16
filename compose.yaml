@@ -34,6 +34,8 @@ services:
     image: linuxserver/grav:1.7.48
     restart: unless-stopped
     environment:
+      - PUID=1000
+      - PGID=1000
       - TZ=America/Chicago
     volumes:
       - /site:/config
